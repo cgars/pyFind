@@ -183,7 +183,8 @@ class FindData(object):
 
 class FindPluginContainer(object):
     def __init__(self):
-        pass
+        self.nodes = []
+        self.leaves = []
 
 
 class FindMetaDataDict(dict):
@@ -256,10 +257,7 @@ class FindMetaDataDict(dict):
 
     def __contains__(self, item):
         """Overides Dictionary __contains__ to use fuzzy matching"""
-        if self._search(item, True)[0]:
-            return True
-        else:
-            return False
+        return bool(self._search(item, True)[0])
 
     def __getitem__(self, lookfor):
         """Overides Dictionary __getitem__ to use fuzzy matching"""
@@ -295,10 +293,10 @@ class TreeWalkRegistry(FindRegistry):
         """
         base_path = os.getcwd()
         logging.debug('Will now start walking %s' % self.pluginpath)
-        self.plugins = self.__walk_plugins__(FindPluginContainer(), [(e, i, j) for e, i, j in os.walk(
+        self.leaves = self.__walk_plugins__(FindPluginContainer(), [(e, i, j) for e, i, j in os.walk(
             self.pluginpath)], find_obj)
         os.chdir(base_path)
-        return self.plugins
+        return self.leaves
 
     def __walk_plugins__(self, parent, tree, find_obj):
         """
@@ -312,10 +310,11 @@ class TreeWalkRegistry(FindRegistry):
                 sys.path.append(os.path.join(tree[0][0], _subfolder))
                 logging.debug('Added %s to the path' % os.path.join(tree[0][0],
                                                                     _subfolder))
-                _node_name = tree[0][0].rpartition(os.sep)[2]
                 _tmp = FindPluginContainer()
                 _subtree = self.__walk_plugins__(_tmp, [(e, i, j) for e, i, j
                                                         in os.walk(tree[0][0] + '/' + _subfolder)], find_obj)
+                parent.nodes.append(_subtree)
+                _subtree.name = _subfolder
                 parent.__dict__[_subfolder] = _subtree
                 logging.debug('Have added %s with name %s as a child to %s' % (
                     _subtree, _subfolder, parent))
@@ -332,6 +331,7 @@ class TreeWalkRegistry(FindRegistry):
         for plugin in plugins:
             _tmp_func = find_obj.wrap_with_find_data_object(plugin[1].find_call())
             _name = plugin[0]
+            parent.leaves.append(plugin)
             parent.__dict__[_name] = _tmp_func
             logging.debug('Have added %s with name %s as a child to %s' % (_tmp_func, _name, parent))
 
