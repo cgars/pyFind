@@ -88,7 +88,7 @@ class MainMenue(Menu):
         return parent_menu
 
     @staticmethod
-    def __check_for_guified_plugins__(self, plugins):
+    def __check_for_guified_plugins__(plugins):
         """
         Returns a list of all Find plugins that implement a get_draggable method
         in _files
@@ -615,7 +615,7 @@ class PvPParameter(Frame):
         return self.type_conversion(self.value.get())
 
     @staticmethod
-    def type_conversion(self, value):
+    def type_conversion(value):
         """
         called to convert the paremter value (string) into deired type
         default = float
