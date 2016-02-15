@@ -7,7 +7,6 @@
 # Contributors:
 #     Christian Garbers - initial API and implementation
 # -------------------------------------------------------------------------------
-
 from Tkinter import *
 
 from numpy import *
@@ -16,20 +15,24 @@ from pyFind.Find import FindPlugin
 from plugin.PyFindGUI.PyFindGUI import Draggable, MyScale
 
 
-class Add(FindPlugin):
+class Substract(FindPlugin):
     """
-    This pyFind plugin supports a simple addition operation
+    This pyFind plugin supports a simple substraction operation
     """
+
+    def __init__(self):
+        pass
+
     @classmethod
     def find_call(cls):
-        return pyfind_add
+        return pyfind_substract
 
     @classmethod
     def get_draggable(cls, parent, find_object):
-        return AddDrag(parent, pyfind_add, find_object.plugins.General.Add)
+        return SubstractDrag(parent, pyfind_substract, find_object.General.Substract)
 
 
-class AddDrag(Draggable):
+class SubstractDrag(Draggable):
     def __init__(self, parent, this_function, find_function):
         Draggable.__init__(self, parent, this_function, find_function, outputs=['Result'], label='Substract')
         self.parameter_button.place_forget()
@@ -51,11 +54,11 @@ class AddDrag(Draggable):
         [e.update() for e in self.next]
 
 
-def pyfind_add(v1, v2):
+def pyfind_substract(v1, v2):
     """
-    Substract the two values
+    Add the two values
     :param v1: Value1
     :param v2: Value2
     :return: The result of adding the two values
     """
-    return add(v1, v2)
+    return v1 - v2
