@@ -3,8 +3,8 @@
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Simplified BSD License
 # which accompanies this distribution
-# 
-# Contributors:
+#
+#  Contributors:
 #     Christian Garbers - initial API and implementation
 # -------------------------------------------------------------------------------
 from Tkinter import *
@@ -35,7 +35,7 @@ class GUI(FindPlugin):
         """
         tkinter_root = Tk()
         tkinter_root.wm_title("pyFind")
-        m_frame = MainFrame(tkinter_root, self.find_object,
+        MainFrame(tkinter_root, self.find_object,
                             width=1900, height=1200)
         logging.debug('Starting the pyFind GUI')
         tkinter_root.mainloop()
@@ -87,6 +87,7 @@ class MainMenue(Menu):
         self.add_new_module(self.__check_for_guified_plugins__(tree.leaves), find_object, parent_menu)
         return parent_menu
 
+    @staticmethod
     def __check_for_guified_plugins__(self, plugins):
         """
         Returns a list of all Find plugins that implement a get_draggable method
@@ -320,7 +321,7 @@ class Draggable(Frame):
 
     """
 
-    def __init__(self, parent, this_function, find_function, position=(0, 0), outputs=[],
+    def __init__(self, parent, this_function, find_function, position=(0, 0), outputs=(),
                  label=None, **kwargs):
         """
         parent  the widget on which this Draggable is placed
@@ -613,6 +614,7 @@ class PvPParameter(Frame):
         """
         return self.type_conversion(self.value.get())
 
+    @staticmethod
     def type_conversion(self, value):
         """
         called to convert the paremter value (string) into deired type
@@ -641,7 +643,7 @@ class HelpMessage(Frame):
         self.place_forget()
 
 
-class Parameter:
+class Parameter(object):
     def __init__(self, name, _min=None, _max=None, values=None, default=None, position=(0, 0), **kwargs):
         if _min:
             self.name = name
