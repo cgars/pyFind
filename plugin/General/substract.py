@@ -48,9 +48,9 @@ class SubstractDrag(Draggable):
 
     def update(self):
         self.result = self.find_function(float(self.scale1.get_value()) *
-                                         self.inputs['x1'].get_result().data,
+                                         self.inputs['v1'].get_result().data,
                                          float(self.scale2.get_value()) *
-                                         self.inputs['x2'].get_result().data)
+                                         self.inputs['v2'].get_result().data)
         [e.update() for e in self.next]
 
 

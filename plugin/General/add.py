@@ -31,7 +31,7 @@ class Add(FindPlugin):
 
 class AddDrag(Draggable):
     def __init__(self, parent, this_function, find_function):
-        Draggable.__init__(self, parent, this_function, find_function, outputs=['Result'], label='Substract')
+        Draggable.__init__(self, parent, this_function, find_function, outputs=['Result'], label='Add')
         self.parameter_button.place_forget()
         self.help_button.place_forget()
         self.scale1 = MyScale(self, from_=0, to=2, digits=3, name='scale1',
@@ -45,9 +45,9 @@ class AddDrag(Draggable):
 
     def update(self):
         self.result = self.find_function(float(self.scale1.get_value()) *
-                                         self.inputs['x1'].get_result().data,
+                                         self.inputs['v1'].get_result().data,
                                          float(self.scale2.get_value()) *
-                                         self.inputs['x2'].get_result().data)
+                                         self.inputs['v2'].get_result().data)
         [e.update() for e in self.next]
 
 

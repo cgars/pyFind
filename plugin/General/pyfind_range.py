@@ -7,6 +7,8 @@
 # Contributors:
 #     Christian Garbers - initial API and implementation
 # -------------------------------------------------------------------------------
+from numpy import arange
+
 from pyFind.Find import FindPlugin
 from plugin.PyFindGUI.PyFindGUI import Draggable
 
@@ -41,4 +43,4 @@ def pyfind_range(start=1, stop=10):
     :param stop:
     :return:
     """
-    return range(int(start), int(stop))
+    return arange(int(start), int(stop))
