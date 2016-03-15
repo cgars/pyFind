@@ -97,8 +97,8 @@ def detect_spikes(data_entity,
 
     else:
         errorstr = "Your input for method_number has not been recognised." \
-                   + "Your method_number:" + str(method_number) + "\n" \
-                                                                  "Expected input for method_number: integer between 0-4"
+                   + "Your method_number:" + str(method_number) + "\n" + \
+                   "Expected input for method_number: integer between 0-4"
 
         print errorstr
         return 0

@@ -36,5 +36,5 @@ setup(name='pyFind',
       author='Christian Garbers',
       author_email='christian@stuebeweg50.de',
       url='http://www.atomkraftprotz.de',
-      packages=packages, requires=['numpy']
+      packages=packages, requires=['numpy', 'scipy']
       )
