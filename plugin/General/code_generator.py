@@ -40,6 +40,7 @@ class CodeGeneratorDrag(Draggable):
         self.file_button = Button(self, text="Save as", command=self.get_file)
         self.file_button.place(x=60, y=20)
         self.get_file()
+        self.file = False
 
     def update(self):
         self.get_result(None)
@@ -55,10 +56,8 @@ class CodeGeneratorDrag(Draggable):
         return []
 
     def get_file(self):
-        try:
+        if isinstance(self._file, file):
             self._file.close()
-        except:
-            pass
         self._file = tkFileDialog.asksaveasfile()
 
     def generate_code(self, previous):
@@ -116,7 +115,7 @@ class CodeGeneratorDrag(Draggable):
             try:
                 _variable = _line.split('=', 1)[0]
                 _argument = _line.split('=', 1)[1]
-                _argument = self.__escape__chars__(_argument)
+                _argument = self.escape__chars(_argument)
                 _pattern = '^.+=%s' % (_argument)
                 _all = re.findall(_pattern, _script, re.MULTILINE)
                 for _occurence in _all[1:]:
@@ -127,7 +126,8 @@ class CodeGeneratorDrag(Draggable):
                 print  sys.exc_info()[0]
         return _script
 
-    def __escape__chars__(self, _pattern):
+    @staticmethod
+    def escape__chars(_pattern):
         _pattern = _pattern.replace('.', '\.')
         _pattern = _pattern.replace('(', '\(')
         _pattern = _pattern.replace(')', '\)')
